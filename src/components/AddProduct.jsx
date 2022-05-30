@@ -1,8 +1,10 @@
-import { Button,  Modal, ModalBody, Radio, RadioGroup, Select,Input, FormControl, FormLabel,  } from "@chakra-ui/react";
+import { Button,  Modal, ModalBody, Radio, RadioGroup, Select,Input, FormControl, FormLabel,useDisclosure } from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
 
+
 const AddProduct = (props) => {
+ 
  
   const [employee,setEmployee] = useState({
   
@@ -37,23 +39,21 @@ const AddProduct = (props) => {
     // console.log(employee);
     props.addData(employee)
     setEmployee({
-      // ...employee,
-      // "name":'',
-      // "age" :'',
-      // "address":"",
-      // "dept":"",
-      // "salary":0,
-      // "marital":false,
-      // "photo":""
+      ...employee,
+      "title":'',
+    
     });
+   
   }
-
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
-      <Button my={4} data-cy="add-product-button">helo</Button>
-      <Modal>
+    
+      <Button  onClick={onOpen} my={4} data-cy="add-product-button">helo</Button>
+
+      <Modal  isOpen={isOpen} onClose={onClose}>
         <ModalBody pb={6}>
-          <FormControl onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}  >
             <FormLabel>Title</FormLabel>
           <Input data-cy="add-product-title" 
           name="title"
@@ -73,8 +73,8 @@ const AddProduct = (props) => {
           <FormLabel>price</FormLabel>
           <Input data-cy="add-product-price" name="price"
           onChange={handleOnChange} />
-          <Button data-cy="add-product-submit-button" type="submit"></Button>
-          </FormControl>
+          <Button data-cy="add-product-submit-button" type="submit"  onClick={onClose}></Button>
+          </form>
         </ModalBody>
       </Modal>
      

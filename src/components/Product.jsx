@@ -30,7 +30,7 @@ const Product = ({data}) => {
       return (
         
         <>
-     <div key={el.id}></div>
+     
         <GridItem> 
          <Stack data-cy="product">
   
