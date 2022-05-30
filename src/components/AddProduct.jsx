@@ -1,35 +1,83 @@
+import { Button,  Modal, ModalBody, Radio, RadioGroup, Select,Input, FormControl, FormLabel,  } from "@chakra-ui/react";
 import React from "react";
+import { useState } from "react";
 
-const AddProduct = () => {
-  // TODO: Remove below const and instead import them from chakra
-  const Button = () => <div />;
-  const Modal = () => <div />;
-  const ModalBody = () => <div />;
-  const Input = () => <div />;
-  const Select = () => <div />;
-  const RadioGroup = () => <div />;
-  const Radio = () => <div />;
+const AddProduct = (props) => {
+ 
+  const [employee,setEmployee] = useState({
+  
+  });
+  const handleOnChange = (event) => {
+    let {name, value, type, checked, files} = event.target;
+    if(type==='checkbox')
+    {
+      setEmployee({
+        ...employee,
+        [name]:checked
+      })
+    }
+    else if(type==='file')
+    {
+      setEmployee({
+        ...employee,
+        [name]:files
+      })
+    }
+    else
+    {
+      setEmployee({
+        ...employee,
+        [name]:value
+      })
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // console.log(employee);
+    props.addData(employee)
+    setEmployee({
+      // ...employee,
+      // "name":'',
+      // "age" :'',
+      // "address":"",
+      // "dept":"",
+      // "salary":0,
+      // "marital":false,
+      // "photo":""
+    });
+  }
 
   return (
     <>
-      <Button my={4} data-cy="add-product-button"></Button>
+      <Button my={4} data-cy="add-product-button">helo</Button>
       <Modal>
         <ModalBody pb={6}>
-          <Input data-cy="add-product-title" />
-          <Select data-cy="add-product-category">
-            <option data-cy="add-product-category-shirt"></option>
-            <option data-cy="add-product-category-pant"></option>
-            <option data-cy="add-product-category-jeans"></option>
+          <FormControl onSubmit={handleSubmit}>
+            <FormLabel>Title</FormLabel>
+          <Input data-cy="add-product-title" 
+          name="title"
+          onChange={handleOnChange} />
+            <FormLabel>Category</FormLabel>
+          <Select data-cy="add-product-category" name="category" onChange={handleOnChange}>
+            <option data-cy="add-product-category-shirt" value="shirt">S</option>
+            <option data-cy="add-product-category-pant"  value="pant">P</option>
+            <option data-cy="add-product-category-jeans"  value="jeans">J</option>
           </Select>
-          <RadioGroup data-cy="add-product-gender">
-            <Radio data-cy="add-product-gender-male"></Radio>
-            <Radio data-cy="add-product-gender-female"></Radio>
-            <Radio data-cy="add-product-gender-unisex"></Radio>
+          <FormLabel>Gender</FormLabel>
+          <RadioGroup data-cy="add-product-gender" >
+            <Radio data-cy="add-product-gender-male" name="gender" value="male">M</Radio>
+            <Radio data-cy="add-product-gender-female" name="gender" value="female">F</Radio>
+            <Radio data-cy="add-product-gender-unisex" name="gender" value="Unisex" >U</Radio>
           </RadioGroup>
-          <Input data-cy="add-product-price" />
-          <Button data-cy="add-product-submit-button"></Button>
+          <FormLabel>price</FormLabel>
+          <Input data-cy="add-product-price" name="price"
+          onChange={handleOnChange} />
+          <Button data-cy="add-product-submit-button" type="submit"></Button>
+          </FormControl>
         </ModalBody>
       </Modal>
+     
     </>
   );
 };
